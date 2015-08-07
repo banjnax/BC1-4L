@@ -120,8 +120,8 @@ public class DrawNetwork extends JFrame{
 		this.setLocation(G_X,G_Y);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
-		this.setResizable(false);
-		//this.setResizable(true);
+		//this.setResizable(false);
+		this.setResizable(true);
 		
 		this.setLayout(new BorderLayout());//new GridBagLayout()
 		this.setMinimumSize(new Dimension(G_WIDTH,G_HEIGHT));
@@ -276,6 +276,13 @@ public class DrawNetwork extends JFrame{
 	}
 	public static void doCrawling(){
 		bcls.getRelateUrls();
+	}
+	public  void changeCoor(double wi, double he){
+		int nLen = drawGraph.nodes.ags.size();
+		for(int i = 0;i<nLen;i++){
+			drawGraph.nodes.ags.get(i).self.x*=wi;
+			drawGraph.nodes.ags.get(i).self.y*=he;
+		}
 	}
 	private class TimerAction implements ActionListener{
 		
@@ -673,7 +680,13 @@ public class DrawNetwork extends JFrame{
 		@Override
 		public void componentResized(ComponentEvent e) {
 			// TODO Auto-generated method stub
-			invalidate();
+			G_HEIGHT = getHeight();//update the paint part
+			G_WIDTH = getWidth();
+			int width= drawGraph.palette.getWidth();//update the palette part
+			int height = drawGraph.palette.getHeight();
+			changeCoor(1.0*width/DrawGraph.WIDTH,1.0*height/DrawGraph.HEIGHT);
+			DrawGraph.WIDTH = width;
+			DrawGraph.HEIGHT = height;
 			//validate();
 		}
 

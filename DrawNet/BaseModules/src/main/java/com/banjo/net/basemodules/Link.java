@@ -15,8 +15,10 @@ public class Link implements Serializable{
 	public boolean directLink = false;
 	public Color self_color = Color.LIGHT_GRAY;
 	public Link(Point s,Point e){
-		this.start = new Point(s.x,s.y);
-		this.end = new Point(e.x,e.y);
+		//this.start = new Point(s.x,s.y);
+		//this.end = new Point(e.x,e.y);
+		this.start = s;
+		this.end = e;
 	}
 	public void paint(Graphics g){
 		Color c = g.getColor();
