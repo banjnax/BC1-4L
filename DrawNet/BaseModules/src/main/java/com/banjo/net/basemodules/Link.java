@@ -32,22 +32,22 @@ public class Link implements Serializable{
 		g.setColor(c);
 	}
 	
-      public   void  paintk(Graphics g,  int  x1,  int  y1,  int  x2,  int  y2)  {
+    public   void  paintk(Graphics g,  int  x1,  int  y1,  int  x2,  int  y2)  {
 
          double  H  =   10 ;  //the height of the arrow
-          double  L  =   4 ; //half of the down
-          int  x3  =   0 ;
+         double  L  =   4 ; //half of the down
+         int  x3  =   0 ;
          int  y3  =   0 ;
          int  x4  =   0 ;
          int  y4  =   0 ;
          double  awrad  =  Math.atan(L  /  H);  //angle    
-          double  arraow_len  =  Math.sqrt(L  *  L  +  H  *  H); //Length   
-          double [] arrXY_1  =  rotateVec(x2  -  x1, y2  -  y1, awrad,  true , arraow_len);
+         double  arraow_len  =  Math.sqrt(L  *  L  +  H  *  H); //Length   
+         double [] arrXY_1  =  rotateVec(x2  -  x1, y2  -  y1, awrad,  true , arraow_len);
          double [] arrXY_2  =  rotateVec(x2  -  x1, y2  -  y1,  - awrad,  true , arraow_len);
          double  x_3  =  x2  -  arrXY_1[ 0 ];  // (x3,y3)
-          double  y_3  =  y2  -  arrXY_1[ 1 ];
+         double  y_3  =  y2  -  arrXY_1[ 1 ];
          double  x_4  =  x2  -  arrXY_2[ 0 ]; // (x4,y4)
-          double  y_4  =  y2  -  arrXY_2[ 1 ];
+         double  y_4  =  y2  -  arrXY_2[ 1 ];
 
         Double X3  =   new  Double(x_3);
         x3  =  X3.intValue();
@@ -74,8 +74,9 @@ public class Link implements Serializable{
 
          double  mathstr[]  =   new   double [ 2 ];
          //rotation
-          double  vx  =  px  *  Math.cos(ang)  -  py  *  Math.sin(ang);
+         double  vx  =  px  *  Math.cos(ang)  -  py  *  Math.sin(ang);
          double  vy  =  px  *  Math.sin(ang)  +  py  *  Math.cos(ang);
+         
          if  (isChLen)  {
              double  d  =  Math.sqrt(vx  *  vx  +  vy  *  vy);
             vx  =  vx  /  d  *  newLen;

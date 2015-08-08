@@ -375,16 +375,6 @@ public class DrawGraph {
 				if(x+n.size/2 > palette.getWidth()) n.self.x = palette.getWidth() - n.size/2;
 				if(y - n.size/2 - W_Y <0) n.self.y = n.size/2 + W_Y;
 				if(y + n.size/2 > palette.getHeight()+W_Y) n.self.y = palette.getHeight()+ W_Y - n.size/2;
-				for(int i=0;i<links.ls.size();i++){
-					if(links.ls.get(i).label_start == n.number){
-						links.ls.get(i).start.x = x;
-						links.ls.get(i).start.y = y;
-					}
-					if(links.ls.get(i).label_end == n.number){
-						links.ls.get(i).end.x = x;
-						links.ls.get(i).end.y = y;
-					}
-				}
 				//repaint();
 				DrawNetwork.hasDiff = true;
 			}
