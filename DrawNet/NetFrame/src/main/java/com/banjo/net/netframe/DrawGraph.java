@@ -249,7 +249,7 @@ public class DrawGraph {
 							break;
 						}
 					}
-					if(!flag) DrawNetwork.printInfo( "Info:No edge to be removed(No such edge in the net)!\n","red");
+					if(!flag) DrawNetwork.printInfo( "Warning:No edge to be removed(No such edge in the net)!\n","blue");
 					else {
 						if(direct){
 							nodes.getNode(label_start).outDegreeDec();

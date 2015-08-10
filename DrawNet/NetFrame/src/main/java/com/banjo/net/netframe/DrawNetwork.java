@@ -44,6 +44,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -64,7 +66,7 @@ public class DrawNetwork extends JFrame{
 	private static int G_HEIGHT = 700;
 	private static int G_X = 400;
 	private static int G_Y = 100;
-	
+	public static Logger logger = Logger.getLogger(DrawNetwork.class.getName());
 	public static boolean hasDiff = false;
 	Image vImage=null;
 	Image offScreenImage = null;
@@ -114,6 +116,8 @@ public class DrawNetwork extends JFrame{
 		new DrawNetwork().launch();
 	}
 	public void launch(){
+		//config log4j
+		PropertyConfigurator.configure ("bc14log.properties");
 		
 		//outline of the frame
 		this.setSize(G_WIDTH,G_HEIGHT);
@@ -196,9 +200,11 @@ public class DrawNetwork extends JFrame{
         StyleConstants.setFontSize(def, 10);
         Style normal = his.addStyle("normal", def);//name "def" to be normal
         
+        //Error
         Style s1 = his.addStyle("red", normal);//"red" style based on the "normal" style ,add color attribute to the "red" style
         StyleConstants.setForeground(s1, Color.RED);
        
+        //normal
         Style s2 = his.addStyle("blue", normal);
         StyleConstants.setForeground(s2, Color.BLUE);
         
@@ -257,21 +263,26 @@ public class DrawNetwork extends JFrame{
         g.drawImage(offScreenImage, 0, 0, null);     
 	}
 	public static void printInfo(String info,String type){
+		if(type=="red") logger.error(info);
+		else logger.info(info);
 		try {
 			his.getDocument().insertString(his.getDocument().getLength(),
 			         info, his.getStyle(type));//get the history handle and add content to it
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error(e);
 		}
 	}
 	public static void printInfo(String info){//default "normal" style
+		logger.info(info);
 		try {
 			his.getDocument().insertString(his.getDocument().getLength(),
 			         info, his.getStyle("normal"));
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error(e);
 		}
 	}
 	public static void doCrawling(){
@@ -316,7 +327,7 @@ public class DrawNetwork extends JFrame{
 							printInfo( "Info:A net saved!"+fileName+".txt\n","blue");
 						}
 						else{
-							printInfo( "Warning:Nothing saved!\n", "red");
+							printInfo( "Warning:Nothing saved!\n");
 							oos.close();
 						}
 					} catch (FileNotFoundException e1) {
@@ -491,10 +502,10 @@ public class DrawNetwork extends JFrame{
 							}
 							fos.flush();
 							fos.close();
-							printInfo( "Info:A net data saved!"+fileName+"\n","red");
+							printInfo( "Info:A net data saved!"+fileName+"\n","blue");
 						}
 						else{
-							printInfo( "Warning:Nothing saved!\n", "red");
+							printInfo( "Warning:Nothing saved!\n");
 							fos.close();
 						}
 					} catch (FileNotFoundException e1) {
@@ -667,7 +678,7 @@ public class DrawNetwork extends JFrame{
 				if(website != null)
 					printInfo("Info: The Website is "+website+" , Enjoy it!\n", "blue");
 				else 
-					printInfo("Error:No Sunch Node that you input!\n", "blue");
+					printInfo("Error:No Sunch Node that you input!\n", "red");
 			}
 			else{
 				System.out.println("YOU CAN ADD ANTHER MENU HERE!!");

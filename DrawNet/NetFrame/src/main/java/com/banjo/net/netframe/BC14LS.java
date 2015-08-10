@@ -108,7 +108,7 @@ public class BC14LS {
 		DrawNetwork.hasDiff = false;
 		String str = "Info: Crawling Over!\n"+"Info: "+
 				dn.drawGraph.nodes.ags.size()+" nodes  added and "+dn.drawGraph.links.ls.size()+" links added!\n";
-		DrawNetwork.printInfo(str,"red");
+		DrawNetwork.printInfo(str,"blue");
 		System.out.println("Cost Time: "+ (System.currentTimeMillis()-t1)/1000 + "!");
 	}
 	public void addNode(){
