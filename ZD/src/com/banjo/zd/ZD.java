@@ -1,6 +1,7 @@
 package com.banjo.zd;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -11,6 +12,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -19,16 +21,30 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+
 public class ZD extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	private static int G_WIDTH = 500;
-	private static int G_HEIGHT = 200;
+	private static int G_HEIGHT = 500;
 	private static int G_X = 400;
 	private static int G_Y = 100;
 	public boolean op_Ready = false;
 	public boolean my_Ready = false;
 	public ButtonAction ba = new ButtonAction();
+	
+	public JPanel jchartp = new JPanel();
+	public DefaultCategoryDataset DataSet = new DefaultCategoryDataset();
+	public JFreeChart chart =  ChartFactory.createLineChart("Payoffs",
+            "rounds", "Payoff", DataSet, PlotOrientation.VERTICAL, 
+            true, false, false);
+	public ChartPanel chartp = new ChartPanel(chart);
+	
 	public int opS = 0;//1,2,3->pin,ext,self
 	public double myScore = 0;
 	public double opScore = 0;
@@ -150,6 +166,12 @@ public class ZD extends JFrame{
 		h.setHorizontalAlignment(JLabel.LEFT);
         his.setParagraphAttributes(normal, true);
 		jcp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		//chart.getCategoryPlot().setBackgroundPaint(Color.WHITE);
+		chart.getCategoryPlot().
+		jchartp.add(chartp);
+		jchartp.setPreferredSize(new Dimension(530,300));
+		
 		setComponent();
 		
 		printInfo("Typical IDP:\nRSTP:(3,0,5,1)\n","blue");
@@ -169,137 +191,147 @@ public class ZD extends JFrame{
 		
 		cons.gridx = 0;
 		cons.gridy = 0;
+		cons.gridwidth = 11;
+		this.add(jchartp, cons);
+		
+		cons.weighty = 0.02;
+		cons.weightx = 0.6;
+		
+		cons.gridx = 0;
+		cons.gridy = 1;
 		cons.gridwidth = 4;
 		this.add(opponent,cons);
 		
 		cons.gridx = 0;
-		cons.gridy = 1;
+		cons.gridy = 2;
 		this.add(s_Pin,cons);
 		
 		cons.gridx = 0;
-		cons.gridy = 2;
+		cons.gridy = 3;
 		this.add(s_Extort,cons);
 		
 		cons.gridwidth = 1;
 		
 		cons.gridx = 0;
-		cons.gridy = 3;
+		cons.gridy = 4;
 		this.add(p1,cons);
 		
 		cons.gridx = 1;
-		cons.gridy = 3;
+		cons.gridy = 4;
 		this.add(t_P1,cons);
 		
 		cons.gridx = 2;
-		cons.gridy = 3;
+		cons.gridy = 4;
 		this.add(p2,cons);
 		
 		cons.gridx = 3;
-		cons.gridy = 3;
+		cons.gridy = 4;
 		this.add(t_P2,cons);
 		
 		cons.gridx = 0;
-		cons.gridy = 4;
+		cons.gridy = 5;
 		this.add(p3,cons);
 		
 		cons.gridx = 1;
-		cons.gridy = 4;
+		cons.gridy = 5;
 		this.add(t_P3,cons);
 		
 		cons.gridx = 2;
-		cons.gridy = 4;
+		cons.gridy = 5;
 		this.add(p4,cons);
 		
 		cons.gridx = 3;
-		cons.gridy = 4;
+		cons.gridy = 5;
 		this.add(t_P4,cons);
 		
 		cons.gridx = 0;
-		cons.gridy = 5;
+		cons.gridy = 6;
 		cons.gridwidth = 4;
 		this.add(o_Set,cons);
 		
+		cons.weightx = 1;
 		cons.gridx = 4;
-		cons.gridy = 0;
+		cons.gridy = 1;
 		cons.gridwidth = 3;
 		this.add(score, cons);
 		
 		cons.gridx = 4;
-		cons.gridy = 1;
+		cons.gridy = 2;
 		cons.gridwidth = 1;
 		this.add(o_S, cons);
 		
 		cons.gridx = 5;
-		cons.gridy = 1;
+		cons.gridy = 2;
 		this.add(vs, cons);
 		
 		cons.gridx = 6;
-		cons.gridy = 1;
+		cons.gridy = 2;
 		this.add(my_S, cons);
 		
 		cons.gridwidth = 3;
 		
 		cons.gridx = 4;
-		cons.gridy = 2;
+		cons.gridy = 3;
 		this.add(h, cons);
 		
 		cons.gridx = 4;
-		cons.gridy = 3;
+		cons.gridy = 4;
 		cons.gridheight = 3;
 		this.add(jcp, cons);
 		
+		cons.weighty = 0;
 		cons.gridx = 7;
-		cons.gridy = 0;
+		cons.gridy = 1;
 		cons.gridheight = 1;
 		cons.gridwidth = 4;
 		this.add(self, cons);
 		
 		cons.gridx = 7;
-		cons.gridy = 1;
+		cons.gridy = 2;
 		this.add(s_Coop, cons);
 		
 		cons.gridx = 7;
-		cons.gridy = 2;
+		cons.gridy = 3;
 		this.add(s_Def, cons);
 		
 		cons.gridwidth =1;
 		
 		cons.gridx = 7;
-		cons.gridy = 3;
+		cons.gridy = 4;
 		this.add(my_p1, cons);
 		
 		cons.gridx = 8;
-		cons.gridy = 3;
+		cons.gridy = 4;
 		this.add(my_t_P1, cons);
 		
 		cons.gridx = 9;
-		cons.gridy = 3;
+		cons.gridy = 4;
 		this.add(my_p2, cons);
 		
 		cons.gridx = 10;
-		cons.gridy = 3;
+		cons.gridy = 4;
 		this.add(my_t_P2, cons);
 		
 		cons.gridx = 7;
-		cons.gridy = 4;
+		cons.gridy = 5;
 		this.add(my_p3, cons);
 		
 		cons.gridx = 8;
-		cons.gridy = 4;
+		cons.gridy = 5;
 		this.add(my_t_P3, cons);
 		
 		cons.gridx = 9;
-		cons.gridy = 4;
+		cons.gridy = 5;
 		this.add(my_p4, cons);
 		
 		cons.gridx = 10;
-		cons.gridy = 4;
+		cons.gridy = 5;
 		this.add(my_t_P4, cons);
 		
 		cons.gridwidth = 4;
 		
 		cons.gridx = 7;
-		cons.gridy = 5;
+		cons.gridy = 6;
 		this.add(play, cons);
 	}
 	public static void printInfo(String info,String type){
@@ -347,6 +379,9 @@ public class ZD extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			if(e.getSource() == o_Set){
+				for(int i=0;i<10;i++)
+				DataSet.addValue(4+i, "number", i+"");
+				repaint();
 				if(s_Pin.isSelected()) {
 					opS = 1;
 					printInfo("Pin Strategy is selected!\n","blue");
