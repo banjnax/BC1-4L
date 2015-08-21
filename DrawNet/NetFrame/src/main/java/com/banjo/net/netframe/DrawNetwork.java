@@ -149,7 +149,6 @@ public class DrawNetwork extends JFrame{
 				else paintFlag = 1;
 			}
 		});
-		
 		timer.start();
 		bcls = new BC14LS(this);// "http://www.labcomplex.org/"
 		new Thread(new Crawl()).run();

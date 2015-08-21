@@ -190,6 +190,7 @@ public class ZD extends JFrame implements DatasetChangeListener{
 
 		o_Set.addActionListener(ba);
 		play.addActionListener(ba);
+		adaptPlay.addActionListener(ba);
 		
 		//new Thread(new ChartChnage()).start();
 	}
@@ -345,7 +346,7 @@ public class ZD extends JFrame implements DatasetChangeListener{
 		cons.gridy = 6;
 		zdPanel.add(play, cons);
 		
-		cons.gridx = 8;
+		cons.gridx = 9;
 		cons.gridy = 6;
 		zdPanel.add(adaptPlay, cons);
 	}
@@ -423,6 +424,11 @@ public class ZD extends JFrame implements DatasetChangeListener{
 				}
 			}
 			else if(e.getSource() == adaptPlay){
+				//getExtP();
+				p[0]=1;
+				p[1]=0;
+				p[2]=0;
+				p[3]=1;
 				playAdapt();
 			}
 			else{
@@ -433,10 +439,45 @@ public class ZD extends JFrame implements DatasetChangeListener{
 		
 	}
 	public void playAdapt(){//p,q
-		double s_Y = getD(Sy,mp)/getD(new double[]{1,1,1,1},mp);
-		double s_X = getD(Sx,mp)/getD(new double[]{1,1,1,1},mp);
-		.
+		double s_Y,s_X,step=0.1,part1,part2,part3,part4;
+		Random r = new Random();
+		mp[0] = r.nextDouble();
+		mp[1] = r.nextDouble();
+		mp[2] = r.nextDouble();
+		mp[3] = r.nextDouble();
+		count = 0;
+		clearData();
+		for(int i=0;i<900;i++){
+			s_Y = getD(Sy,mp)/getD(new double[]{1,1,1,1},mp);
+			s_X = getD(Sx,mp)/getD(new double[]{1,1,1,1},mp);
+			//printInfo("EY: "+s_Y+",EX: "+s_X+".\n", "blue");
+			part1 = (6-6*mp[1])/(-2+2*mp[1]-mp[3]-mp[2]+2*mp[0]-2*mp[0]*mp[1]+mp[0]*mp[2]+mp[3]*mp[1])-(-6+6*mp[1]+6*mp[0]-6*mp[0]*mp[1]-3*mp[3]+3*mp[3]*mp[1])/Math.pow((-2+2*mp[1]-mp[3]-mp[2]+2*mp[0]-2*mp[0]*mp[1]+mp[0]*mp[2]+mp[3]*mp[1]),2)*(2-2*mp[1]+mp[2]);
+			part2 = (6-6*mp[0]+3*mp[3])/(-2+2*mp[1]-mp[3]-mp[2]+2*mp[0]-2*mp[0]*mp[1]+mp[0]*mp[2]+mp[3]*mp[1])-(-6+6*mp[1]+6*mp[0]-6*mp[0]*mp[1]-3*mp[3]+3*mp[3]*mp[1])/Math.pow((-2+2*mp[1]-mp[3]-mp[2]+2*mp[0]-2*mp[0]*mp[1]+mp[0]*mp[2]+mp[3]*mp[1]),2)*(2-2*mp[0]+mp[3]);
+			part3 = -(-6+6*mp[1]+6*mp[0]-6*mp[0]*mp[1]-3*mp[3]+3*mp[3]*mp[1])/Math.pow((-2+2*mp[1]-mp[3]-mp[2]+2*mp[0]-2*mp[0]*mp[1]+mp[0]*mp[2]+mp[3]*mp[1]),2)*(-1+mp[0]);
+			part4 = (-3+3*mp[1])/(-2+2*mp[1]-mp[3]-mp[2]+2*mp[0]-2*mp[0]*mp[1]+mp[0]*mp[2]+mp[3]*mp[1])-(-6+6*mp[1]+6*mp[0]-6*mp[0]*mp[1]-3*mp[3]+3*mp[3]*mp[1])/Math.pow((-2+2*mp[1]-mp[3]-mp[2]+2*mp[0]-2*mp[0]*mp[1]+mp[0]*mp[2]+mp[3]*mp[1]),2)*(-1+mp[1]);
 
+			if(mp[0]+step*part1<1 && mp[0]+step*part1>0)mp[0]+=step*part1;
+			if(mp[1]+step*part1<1 && mp[1]+step*part1>0)mp[1]+=step*part2;
+			if(mp[2]+step*part1<1 && mp[2]+step*part1>0)mp[2]+=step*part3;
+			if(mp[3]+step*part1<1 && mp[3]+step*part1>0)mp[3]+=step*part4;
+			
+			data[0][count+1] = s_X;
+			data[1][count+1] = s_Y;
+			count++;
+			chart.fireChartChanged();
+		}
+//		//clearData();
+//		data[0][0] =0;
+//		data[1][0] =0;
+//		data[0][1] =5;
+//		data[1][1] =5;
+//		count = 1;
+	}
+	public void clearData(){
+		for(int i=0;i<1000;i++) {
+			data[0][i] = 0;
+			data[1][i] = 0;
+		}
 	}
 	public double getD(double[] f,double[] q){
 		double[][] temD = new double[4][4];
