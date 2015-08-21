@@ -1,5 +1,6 @@
 package com.banjo.zd;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -24,16 +25,18 @@ import javax.swing.text.StyleConstants;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 public class ZD extends JFrame{
 
 	private static final long serialVersionUID = 1L;
-	private static int G_WIDTH = 500;
-	private static int G_HEIGHT = 500;
+	private static int G_WIDTH = 700;
+	private static int G_HEIGHT = 650;
 	private static int G_X = 400;
-	private static int G_Y = 100;
+	private static int G_Y = 60;
 	public boolean op_Ready = false;
 	public boolean my_Ready = false;
 	public ButtonAction ba = new ButtonAction();
@@ -109,6 +112,7 @@ public class ZD extends JFrame{
 		this.setLayout(new GridBagLayout());
 		this.setVisible(true);
 		this.setResizable(false);
+		//this.setResizable(true);
 		this.setBackground(Color.WHITE);
 		
 		opponent.setHorizontalAlignment(JLabel.CENTER);
@@ -168,9 +172,21 @@ public class ZD extends JFrame{
 		jcp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
 		//chart.getCategoryPlot().setBackgroundPaint(Color.WHITE);
-		chart.getCategoryPlot().
+		CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();  
+        categoryplot.setBackgroundPaint(Color.WHITE);  
+        categoryplot.setRangeGridlinesVisible(false);  
+        LineAndShapeRenderer lineandshaperenderer = (LineAndShapeRenderer) categoryplot  
+                .getRenderer();  
+        lineandshaperenderer.setBaseShapesVisible(true);  
+        lineandshaperenderer.setDrawOutlines(true);  
+        lineandshaperenderer.setUseFillPaint(true);  
+        lineandshaperenderer.setBaseFillPaint(Color.white);  
+        lineandshaperenderer.setSeriesStroke(0, new BasicStroke(3F));  
+        lineandshaperenderer.setSeriesOutlineStroke(0, new BasicStroke(2.0F));  
+        lineandshaperenderer.setSeriesShape(0,  
+                new java.awt.geom.Ellipse2D.Double(-5D, -5D, 10D, 10D));  
 		jchartp.add(chartp);
-		jchartp.setPreferredSize(new Dimension(530,300));
+		//jchartp.setPreferredSize(new Dimension(530,300));
 		
 		setComponent();
 		
@@ -195,7 +211,7 @@ public class ZD extends JFrame{
 		this.add(jchartp, cons);
 		
 		cons.weighty = 0.02;
-		cons.weightx = 0.6;
+		cons.weightx = 0.8;
 		
 		cons.gridx = 0;
 		cons.gridy = 1;
@@ -379,9 +395,7 @@ public class ZD extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			if(e.getSource() == o_Set){
-				for(int i=0;i<10;i++)
-				DataSet.addValue(4+i, "number", i+"");
-				repaint();
+				
 				if(s_Pin.isSelected()) {
 					opS = 1;
 					printInfo("Pin Strategy is selected!\n","blue");
@@ -421,6 +435,8 @@ public class ZD extends JFrame{
 			printInfo("Round "+ count +" : C Vs C!\n");
 			my_S.setText(String.format("%.2f", myScore/count));
 			o_S.setText(String.format("%.2f", opScore/count));
+			DataSet.setValue(myScore/count, "MySocre", count+"");
+			DataSet.setValue(opScore/count, "OpponentSocre", count+"");
 			count++;
 		}
 		else if(myOption==0&&opOption==1){//cd
@@ -430,6 +446,8 @@ public class ZD extends JFrame{
 			printInfo("Round "+ count +" : D Vs C!\n");
 			my_S.setText(String.format("%.2f", myScore/count));
 			o_S.setText(String.format("%.2f", opScore/count));
+			DataSet.setValue(myScore/count, "MySocre", count+"");
+			DataSet.setValue(opScore/count, "OpponentSocre", count+"");
 			count++;
 		}
 		else if(myOption==1&&opOption==0){
@@ -439,6 +457,8 @@ public class ZD extends JFrame{
 			printInfo("Round "+ count +" : C Vs D!\n");
 			my_S.setText(String.format("%.2f", myScore/count));
 			o_S.setText(String.format("%.2f", opScore/count));
+			DataSet.setValue(myScore/count, "MySocre", count+"");
+			DataSet.setValue(opScore/count, "OpponentSocre", count+"");
 			count++;
 		}
 		else{
@@ -448,6 +468,8 @@ public class ZD extends JFrame{
 			printInfo("Round "+ count +" : D Vs D!\n");
 			my_S.setText(String.format("%.2f", myScore/count));
 			o_S.setText(String.format("%.2f", opScore/count));
+			DataSet.setValue(myScore/count, "MySocre", count+"");
+			DataSet.setValue(opScore/count, "OpponentSocre", count+"");
 			count++;
 		}
 	}
