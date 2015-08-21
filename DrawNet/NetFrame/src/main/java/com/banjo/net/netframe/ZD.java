@@ -1,4 +1,4 @@
-package com.banjo.zd;
+package com.banjo.net.netframe;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -31,14 +31,11 @@ import org.jfree.data.xy.DefaultXYDataset;
 public class ZD extends JFrame implements DatasetChangeListener{
 
 	private static final long serialVersionUID = 1L;
-	private static int G_WIDTH = 700;
-	private static int G_HEIGHT = 650;
-	private static int G_X = 400;
-	private static int G_Y = 60;
 	public boolean op_Ready = false;
 	public boolean my_Ready = false;
 	public ButtonAction ba = new ButtonAction();
 	
+	public JPanel zdPanel = new JPanel();
 	public JPanel jchartp = new JPanel();
 	
 	public DefaultXYDataset dataSet = new DefaultXYDataset();
@@ -86,7 +83,7 @@ public class ZD extends JFrame implements DatasetChangeListener{
 	JLabel vs = new JLabel("Vs");
 	JTextField my_S = new JTextField(4);
 	
-	JLabel h = new JLabel("History:");
+	JLabel h = new JLabel("Record:");
 	static JTextPane his = new JTextPane();
 	JScrollPane jcp = new JScrollPane(his);
 	
@@ -110,15 +107,15 @@ public class ZD extends JFrame implements DatasetChangeListener{
 		// TODO Auto-generated method stub
 		new ZD().launch();
 	}
+	public ZD(){
+		launch();
+	}
 	public void launch(){
-		this.setSize(G_WIDTH,G_HEIGHT);
-		this.setLocation(G_X,G_Y);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setLayout(new GridBagLayout());
-		this.setVisible(true);
-		this.setResizable(false);
-		//this.setResizable(true);
-		this.setBackground(Color.WHITE);
+
+		zdPanel.setLayout(new GridBagLayout());
+		zdPanel.setBackground(Color.white);
+		chart.setBackgroundPaint(Color.white);
+		chartp.setBackground(Color.white);
 		
 		data[0][0] = 0.0;
 		data[1][0] = 0.0;
@@ -208,7 +205,7 @@ public class ZD extends JFrame implements DatasetChangeListener{
 		cons.gridx = 0;
 		cons.gridy = 0;
 		cons.gridwidth = 11;
-		this.add(jchartp, cons);
+		zdPanel.add(jchartp, cons);
 		
 		cons.weighty = 0.02;
 		cons.weightx = 0.8;
@@ -216,139 +213,139 @@ public class ZD extends JFrame implements DatasetChangeListener{
 		cons.gridx = 0;
 		cons.gridy = 1;
 		cons.gridwidth = 4;
-		this.add(opponent,cons);
+		zdPanel.add(opponent,cons);
 		
 		cons.gridx = 0;
 		cons.gridy = 2;
-		this.add(s_Pin,cons);
+		zdPanel.add(s_Pin,cons);
 		
 		cons.gridx = 0;
 		cons.gridy = 3;
-		this.add(s_Extort,cons);
+		zdPanel.add(s_Extort,cons);
 		
 		cons.gridwidth = 1;
 		
 		cons.gridx = 0;
 		cons.gridy = 4;
-		this.add(p1,cons);
+		zdPanel.add(p1,cons);
 		
 		cons.gridx = 1;
 		cons.gridy = 4;
-		this.add(t_P1,cons);
+		zdPanel.add(t_P1,cons);
 		
 		cons.gridx = 2;
 		cons.gridy = 4;
-		this.add(p2,cons);
+		zdPanel.add(p2,cons);
 		
 		cons.gridx = 3;
 		cons.gridy = 4;
-		this.add(t_P2,cons);
+		zdPanel.add(t_P2,cons);
 		
 		cons.gridx = 0;
 		cons.gridy = 5;
-		this.add(p3,cons);
+		zdPanel.add(p3,cons);
 		
 		cons.gridx = 1;
 		cons.gridy = 5;
-		this.add(t_P3,cons);
+		zdPanel.add(t_P3,cons);
 		
 		cons.gridx = 2;
 		cons.gridy = 5;
-		this.add(p4,cons);
+		zdPanel.add(p4,cons);
 		
 		cons.gridx = 3;
 		cons.gridy = 5;
-		this.add(t_P4,cons);
+		zdPanel.add(t_P4,cons);
 		
 		cons.gridx = 0;
 		cons.gridy = 6;
 		cons.gridwidth = 4;
-		this.add(o_Set,cons);
+		zdPanel.add(o_Set,cons);
 		
 		cons.weightx = 1;
 		cons.gridx = 4;
 		cons.gridy = 1;
 		cons.gridwidth = 3;
-		this.add(score, cons);
+		zdPanel.add(score, cons);
 		
 		cons.gridx = 4;
 		cons.gridy = 2;
 		cons.gridwidth = 1;
-		this.add(o_S, cons);
+		zdPanel.add(o_S, cons);
 		
 		cons.gridx = 5;
 		cons.gridy = 2;
-		this.add(vs, cons);
+		zdPanel.add(vs, cons);
 		
 		cons.gridx = 6;
 		cons.gridy = 2;
-		this.add(my_S, cons);
+		zdPanel.add(my_S, cons);
 		
 		cons.gridwidth = 3;
 		
 		cons.gridx = 4;
 		cons.gridy = 3;
-		this.add(h, cons);
+		zdPanel.add(h, cons);
 		
 		cons.gridx = 4;
 		cons.gridy = 4;
 		cons.gridheight = 3;
-		this.add(jcp, cons);
+		zdPanel.add(jcp, cons);
 		
 		cons.weighty = 0;
 		cons.gridx = 7;
 		cons.gridy = 1;
 		cons.gridheight = 1;
 		cons.gridwidth = 4;
-		this.add(self, cons);
+		zdPanel.add(self, cons);
 		
 		cons.gridx = 7;
 		cons.gridy = 2;
-		this.add(s_Coop, cons);
+		zdPanel.add(s_Coop, cons);
 		
 		cons.gridx = 7;
 		cons.gridy = 3;
-		this.add(s_Def, cons);
+		zdPanel.add(s_Def, cons);
 		
 		cons.gridwidth =1;
 		
 		cons.gridx = 7;
 		cons.gridy = 4;
-		this.add(my_p1, cons);
+		zdPanel.add(my_p1, cons);
 		
 		cons.gridx = 8;
 		cons.gridy = 4;
-		this.add(my_t_P1, cons);
+		zdPanel.add(my_t_P1, cons);
 		
 		cons.gridx = 9;
 		cons.gridy = 4;
-		this.add(my_p2, cons);
+		zdPanel.add(my_p2, cons);
 		
 		cons.gridx = 10;
 		cons.gridy = 4;
-		this.add(my_t_P2, cons);
+		zdPanel.add(my_t_P2, cons);
 		
 		cons.gridx = 7;
 		cons.gridy = 5;
-		this.add(my_p3, cons);
+		zdPanel.add(my_p3, cons);
 		
 		cons.gridx = 8;
 		cons.gridy = 5;
-		this.add(my_t_P3, cons);
+		zdPanel.add(my_t_P3, cons);
 		
 		cons.gridx = 9;
 		cons.gridy = 5;
-		this.add(my_p4, cons);
+		zdPanel.add(my_p4, cons);
 		
 		cons.gridx = 10;
 		cons.gridy = 5;
-		this.add(my_t_P4, cons);
+		zdPanel.add(my_t_P4, cons);
 		
 		cons.gridwidth = 4;
 		
 		cons.gridx = 7;
 		cons.gridy = 6;
-		this.add(play, cons);
+		zdPanel.add(play, cons);
 	}
 	public static void printInfo(String info,String type){
 		try {

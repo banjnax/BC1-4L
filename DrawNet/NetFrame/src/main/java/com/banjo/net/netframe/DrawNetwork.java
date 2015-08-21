@@ -62,9 +62,9 @@ public class DrawNetwork extends JFrame{
  * @author banjo
  */
 	private static final long serialVersionUID = 1L;
-	private static int G_WIDTH = 800;
-	private static int G_HEIGHT = 700;
-	private static int G_X = 400;
+	private static int G_WIDTH = 750;
+	private static int G_HEIGHT = 800;
+	private static int G_X = 500;
 	private static int G_Y = 100;
 	public static Logger logger = Logger.getLogger(DrawNetwork.class.getName());
 	public static boolean hasDiff = false;
@@ -105,6 +105,7 @@ public class DrawNetwork extends JFrame{
     
     DrawGraph drawGraph = new DrawGraph();//have the graph handle
     DrawChart drawChart = new DrawChart(drawGraph);
+    ZD zd = new ZD();
     
     static BC14LS bcls = null;
     int paintFlag = 0;//the selected tap
@@ -191,6 +192,7 @@ public class DrawNetwork extends JFrame{
 		
 		jtp.add(drawGraph.graph,"Graph");
 		jtp.add(drawChart.jchartp,"Chart");
+		jtp.add(zd.zdPanel,"ZD");
 		
 		//History part : show the operations
 		
