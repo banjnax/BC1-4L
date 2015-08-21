@@ -28,6 +28,8 @@ import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.xy.DefaultXYDataset;
 
+import Jama.Matrix;
+
 public class ZD extends JFrame implements DatasetChangeListener{
 
 	private static final long serialVersionUID = 1L;
@@ -54,8 +56,8 @@ public class ZD extends JFrame implements DatasetChangeListener{
 	public double beta = -0.1;
 	public double lambda = 0.2;
 	public double chi = 2.5;
-	public int[] Sy =new int[]{3,5,0,1}; 
-	public int[] Sx = new int[]{3,0,5,1};
+	public double[] Sy =new double[]{3,5,0,1}; 
+	public double[] Sx = new double[]{3,0,5,1};
 	public double[] p = new double[4];
 	public double[] mp = new double[4];
 	public boolean mpFlag = false;
@@ -102,11 +104,7 @@ public class ZD extends JFrame implements DatasetChangeListener{
 	JLabel my_p4 = new JLabel("p4:");
 	JTextField my_t_P4 = new JTextField(3);
 	JButton play = new JButton("Play");
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		new ZD().launch();
-	}
+	JButton adaptPlay = new JButton("Adapt");
 	public ZD(){
 		launch();
 	}
@@ -341,11 +339,15 @@ public class ZD extends JFrame implements DatasetChangeListener{
 		cons.gridy = 5;
 		zdPanel.add(my_t_P4, cons);
 		
-		cons.gridwidth = 4;
+		cons.gridwidth = 2;
 		
 		cons.gridx = 7;
 		cons.gridy = 6;
 		zdPanel.add(play, cons);
+		
+		cons.gridx = 8;
+		cons.gridy = 6;
+		zdPanel.add(adaptPlay, cons);
 	}
 	public static void printInfo(String info,String type){
 		try {
@@ -413,15 +415,37 @@ public class ZD extends JFrame implements DatasetChangeListener{
 					printInfo("Self Strategy is selected!\n","blue");
 				}
 			}
-			if(e.getSource() == play){
+			else if(e.getSource() == play){
 				switch(opS){
 					case 1:getPinP();playGame();break;
 					case 2:getExtP();playGame();break;
 					case 3:getSelf();playGame();break;
 				}
 			}
+			else if(e.getSource() == adaptPlay){
+				playAdapt();
+			}
+			else{
+				
+			}
+			
 		}
 		
+	}
+	public void playAdapt(){//p,q
+		double s_Y = getD(Sy,mp)/getD(new double[]{1,1,1,1},mp);
+		double s_X = getD(Sx,mp)/getD(new double[]{1,1,1,1},mp);
+		.
+
+	}
+	public double getD(double[] f,double[] q){
+		double[][] temD = new double[4][4];
+		temD[0][0] = -1+p[0]*q[0]; temD[0][1] = -1+p[0]; temD[0][2] = -1+q[0]; temD[0][3] = f[0];
+		temD[1][0] = p[1]*q[2]; temD[1][1] = -1+p[1]; temD[1][2] = q[2]; temD[1][3] = f[1];
+		temD[2][0] = p[2]*q[1]; temD[2][1] = p[2]; temD[2][2] = -1+q[1]; temD[2][3] = f[2];
+		temD[3][0] = p[3]*q[3]; temD[3][1] = p[3]; temD[3][2] = q[3]; temD[3][3] = f[3];
+		Matrix d = new Matrix(temD);
+		return d.det();
 	}
 	public void playGame(){//RSTP:3,0,5,1,pin:2,beta=-0.1,lambda=0.2;
 		
