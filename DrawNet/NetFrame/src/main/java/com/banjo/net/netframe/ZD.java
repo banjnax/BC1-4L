@@ -23,7 +23,9 @@ import javax.swing.text.StyleConstants;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.xy.DefaultXYDataset;
@@ -47,6 +49,9 @@ public class ZD extends JFrame implements DatasetChangeListener{
             false, false, false);//ChartFactory.createScatterPlot("Payoffs",
             //"Oponent", "Yourself", DataSet, PlotOrientation.VERTICAL, 
          //   false, false, false);
+	XYPlot xyplot = chart.getXYPlot();
+	ValueAxis valueaxis = xyplot.getRangeAxis(); 
+	ValueAxis domainaxis = xyplot.getDomainAxis();
 	public ChartPanel chartp = new ChartPanel(chart);
 	
 	public int opS = 0;//1,2,3->pin,ext,self
@@ -114,11 +119,17 @@ public class ZD extends JFrame implements DatasetChangeListener{
 		zdPanel.setBackground(Color.white);
 		chart.setBackgroundPaint(Color.white);
 		chartp.setBackground(Color.white);
+		chart.getXYPlot().setBackgroundPaint(Color.WHITE);
+		valueaxis .setLowerBound(1);
+		valueaxis .setUpperBound(5);
 		
-		data[0][0] = 0.0;
-		data[1][0] = 0.0;
-		data[0][1] = 5.0;
-		data[1][1] = 5.0;
+		domainaxis .setLowerBound(1);
+		domainaxis .setUpperBound(5);
+		
+//		data[0][0] = 0.0;
+//		data[1][0] = 0.0;
+//		data[0][1] = 5.0;
+//		data[1][1] = 5.0;
 		dataSet.addSeries("test", data);
 		dataSet.addChangeListener(this);
 		
@@ -400,7 +411,7 @@ public class ZD extends JFrame implements DatasetChangeListener{
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			if(e.getSource() == o_Set){
-				
+
 				if(s_Pin.isSelected()) {
 					opS = 1;
 					printInfo("Pin Strategy is selected!\n","blue");
@@ -439,8 +450,17 @@ public class ZD extends JFrame implements DatasetChangeListener{
 		
 	}
 	public void playAdapt(){//p,q
-		double s_Y,s_X,step=0.1,part1,part2,part3,part4;
+		
+		double s_Y,s_X,step=0.01,part1,part2,part3,part4;
 		Random r = new Random();
+		s_Coop.setEnabled(false);
+		s_Def.setEnabled(false);
+		my_t_P1.setEnabled(false);
+		my_t_P2.setEnabled(false);
+		my_t_P3.setEnabled(false);
+		my_t_P4.setEnabled(false);
+		play.setEnabled(false);
+		
 		mp[0] = r.nextDouble();
 		mp[1] = r.nextDouble();
 		mp[2] = r.nextDouble();
@@ -461,11 +481,19 @@ public class ZD extends JFrame implements DatasetChangeListener{
 			if(mp[2]+step*part1<1 && mp[2]+step*part1>0)mp[2]+=step*part3;
 			if(mp[3]+step*part1<1 && mp[3]+step*part1>0)mp[3]+=step*part4;
 			
-			data[0][count+1] = s_X;
-			data[1][count+1] = s_Y;
+			data[0][count] = s_Y;
+			data[1][count] = s_X;
 			count++;
 			chart.fireChartChanged();
 		}
+
+		s_Coop.setEnabled(true);
+		s_Def.setEnabled(true);
+		my_t_P1.setEnabled(true);
+		my_t_P2.setEnabled(true);
+		my_t_P3.setEnabled(true);
+		my_t_P4.setEnabled(true);
+		play.setEnabled(true);
 //		//clearData();
 //		data[0][0] =0;
 //		data[1][0] =0;
@@ -591,6 +619,22 @@ public class ZD extends JFrame implements DatasetChangeListener{
 	@Override
 	public void datasetChanged(DatasetChangeEvent arg0) {
 		// TODO Auto-generated method stub
+		//get min max in each coor
+		double x_min=data[0][0],x_max=data[0][0],y_min=data[1][0],y_max=data[1][0];
+		for(int i=0;i<900;i++){
+			if(x_min>data[0][i]) x_min = data[0][i];
+			if(x_max<data[0][i]) x_max = data[0][i];
+			
+			if(y_min>data[1][i]) y_min = data[1][i];
+			if(y_max<data[1][i])y_max = data[1][i];
+		}
+		
+		valueaxis .setLowerBound(y_min);
+		valueaxis .setUpperBound(y_max);
+		
+		domainaxis .setLowerBound(x_min);
+		domainaxis .setUpperBound(x_max);
+		
 		dataSet.addSeries("test", data);
 		
 	}

@@ -52,6 +52,7 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.jfree.ui.RefineryUtilities;
 
 import com.banjo.net.basemodules.Link;
 import com.banjo.net.basemodules.Net;
@@ -64,8 +65,6 @@ public class DrawNetwork extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private static int G_WIDTH = 750;
 	private static int G_HEIGHT = 800;
-	private static int G_X = 500;
-	private static int G_Y = 100;
 	public static Logger logger = Logger.getLogger(DrawNetwork.class.getName());
 	public static boolean hasDiff = false;
 	Image vImage=null;
@@ -122,7 +121,6 @@ public class DrawNetwork extends JFrame{
 		
 		//outline of the frame
 		this.setSize(G_WIDTH,G_HEIGHT);
-		this.setLocation(G_X,G_Y);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
 		//this.setResizable(false);
@@ -134,6 +132,7 @@ public class DrawNetwork extends JFrame{
 		this.setIconImage(logo);
 		this.pack();
 		this.addComponentListener(new ResizeListener());
+		RefineryUtilities.centerFrameOnScreen(this);
 		
 		setComponent();//we should add the component first, this can mend the pro of resize the frame
 
