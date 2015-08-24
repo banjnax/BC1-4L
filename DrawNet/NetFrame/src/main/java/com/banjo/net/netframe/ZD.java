@@ -53,6 +53,7 @@ public class ZD extends JFrame implements DatasetChangeListener{
 	ValueAxis valueaxis = xyplot.getRangeAxis(); 
 	ValueAxis domainaxis = xyplot.getDomainAxis();
 	public ChartPanel chartp = new ChartPanel(chart);
+	public boolean adapt = false;
 	
 	public int opS = 0;//1,2,3->pin,ext,self
 	public double myScore = 0;
@@ -467,6 +468,7 @@ public class ZD extends JFrame implements DatasetChangeListener{
 		mp[3] = r.nextDouble();
 		count = 0;
 		clearData();
+		adapt = true;
 		for(int i=0;i<900;i++){
 			s_Y = getD(Sy,mp)/getD(new double[]{1,1,1,1},mp);
 			s_X = getD(Sx,mp)/getD(new double[]{1,1,1,1},mp);
@@ -476,17 +478,16 @@ public class ZD extends JFrame implements DatasetChangeListener{
 			part3 = -(-6+6*mp[1]+6*mp[0]-6*mp[0]*mp[1]-3*mp[3]+3*mp[3]*mp[1])/Math.pow((-2+2*mp[1]-mp[3]-mp[2]+2*mp[0]-2*mp[0]*mp[1]+mp[0]*mp[2]+mp[3]*mp[1]),2)*(-1+mp[0]);
 			part4 = (-3+3*mp[1])/(-2+2*mp[1]-mp[3]-mp[2]+2*mp[0]-2*mp[0]*mp[1]+mp[0]*mp[2]+mp[3]*mp[1])-(-6+6*mp[1]+6*mp[0]-6*mp[0]*mp[1]-3*mp[3]+3*mp[3]*mp[1])/Math.pow((-2+2*mp[1]-mp[3]-mp[2]+2*mp[0]-2*mp[0]*mp[1]+mp[0]*mp[2]+mp[3]*mp[1]),2)*(-1+mp[1]);
 
-			if(mp[0]+step*part1<1 && mp[0]+step*part1>0)mp[0]+=step*part1;
-			if(mp[1]+step*part1<1 && mp[1]+step*part1>0)mp[1]+=step*part2;
-			if(mp[2]+step*part1<1 && mp[2]+step*part1>0)mp[2]+=step*part3;
-			if(mp[3]+step*part1<1 && mp[3]+step*part1>0)mp[3]+=step*part4;
+			if(part1>0 && mp[0]+step*part1<1 && mp[0]+step*part1>0)mp[0]+=step*part1;
+			if(part2>0 && mp[1]+step*part1<1 && mp[1]+step*part1>0)mp[1]+=step*part2;
+			if(part3>0 && mp[2]+step*part1<1 && mp[2]+step*part1>0)mp[2]+=step*part3;
+			if(part4>0 && mp[3]+step*part1<1 && mp[3]+step*part1>0)mp[3]+=step*part4;
 			
 			data[0][count] = s_Y;
 			data[1][count] = s_X;
 			count++;
-			chart.fireChartChanged();
 		}
-
+		chart.fireChartChanged();
 		s_Coop.setEnabled(true);
 		s_Def.setEnabled(true);
 		my_t_P1.setEnabled(true);
@@ -628,14 +629,28 @@ public class ZD extends JFrame implements DatasetChangeListener{
 			if(y_min>data[1][i]) y_min = data[1][i];
 			if(y_max<data[1][i])y_max = data[1][i];
 		}
-		
+		if(!adapt){
+			dataSet.addSeries("test", data);
+		}
+		else{
+			double [][] sx = new double[2][900];
+			double [][] sy = new double[2][900];
+			for(int i=0;i<900;i++){
+				sx[0][i] = i;
+				sx[1][i] = data[0][i];
+				
+				sy[0][i] = i;
+				sy[1][i] = data[1][i];
+			}
+			dataSet.addSeries("test", sx);
+			dataSet.addSeries("sy", sy);
+		}
+		adapt = false;
 		valueaxis .setLowerBound(y_min);
 		valueaxis .setUpperBound(y_max);
 		
 		domainaxis .setLowerBound(x_min);
 		domainaxis .setUpperBound(x_max);
-		
-		dataSet.addSeries("test", data);
-		
+//		
 	}
 }
