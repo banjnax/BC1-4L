@@ -11,8 +11,8 @@ public class Net implements Serializable{
 	String name;
 	public ArrayList<Node> nodes;
 	public ArrayList<Link> links;
-	public AdjacentMatrix adjMatrix;
-	public ReachableMatrix reaMatrix;
+	public AdjacentMatrix adjMatrix;//the basic adjacent matrix
+	public ReachableMatrix reaMatrix;//basic reachable matrix
 	public int row;
 	public int col;
 	public int type;
@@ -33,6 +33,11 @@ public class Net implements Serializable{
 		adjMatrix = new AdjacentMatrix(max, max, links, type);
 		reaMatrix = new ReachableMatrix(max, max, links);
 	}
+	/**
+	 * printMatrix print the matrix in the history palettes
+	 * @param m
+	 * @return
+	 */
 	public String printMatrix(Matrix m){
 		int i,j;
 		String s = "";
@@ -44,6 +49,10 @@ public class Net implements Serializable{
 		}
 		return s;
 	}
+	/**
+	 * get the maximum label of nodes 
+	 * @return
+	 */
 	public int findMaxLabel(){
 		int max = nodes.get(0).number;
 		for(int i=0;i<nodes.size();i++) if(max<nodes.get(i).number) max = nodes.get(i).number;

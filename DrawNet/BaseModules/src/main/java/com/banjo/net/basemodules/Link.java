@@ -9,10 +9,10 @@ public class Link implements Serializable{
 	private static final long serialVersionUID = 1L;
 	public Point start;
 	public Point end;
-	public int label_start;
+	public int label_start;// a start node of a link
 	public int label_end;
 	public int weight;
-	public boolean directLink = false;
+	public boolean directLink = false;//whether this link is directed or undirected
 	public Color self_color = Color.LIGHT_GRAY;
 	public Link(Point s,Point e){
 		//this.start = new Point(s.x,s.y);
@@ -23,7 +23,7 @@ public class Link implements Serializable{
 	public void paint(Graphics g){
 		Color c = g.getColor();
 		g.setColor(self_color);
-		if(directLink){
+		if(directLink){//if it's directed ,we should paint the arrow of this link
 			this.paintk(g, start.x, start.y, end.x, end.y);
 		}
 		g.drawLine(start.x, start.y, end.x, end.y);

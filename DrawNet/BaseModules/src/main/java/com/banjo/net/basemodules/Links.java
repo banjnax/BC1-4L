@@ -13,6 +13,12 @@ public class Links {
 		Iterator<Link> it = ls.iterator();
 		while(it.hasNext())it.next().paint(g);
 	}
+	/**
+	 * @see Node
+	 * @param start
+	 * @param end
+	 * @return
+	 */
 	public boolean findLink(int start,int end){
 		for(int i=0;i<ls.size();i++){
 			if(ls.get(i).label_start==start && ls.get(i).label_end==end) return true;

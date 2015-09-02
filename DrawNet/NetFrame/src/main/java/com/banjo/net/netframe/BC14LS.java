@@ -13,9 +13,9 @@ import com.banjo.net.bc14ls.FunctionUtils;
 import com.banjo.net.bc14ls.VisitedUrl;
 
 public class BC14LS {
-	VisitedUrl vUrls;
+	VisitedUrl vUrls;//the urls that we had visited 
 	String startUrl = "";
-	String topDomain = "";
+	String topDomain = "";// the domain of the start url
 	DrawNetwork dn = null;
 	HashMap<String,Integer> mapNodes = new HashMap<String,Integer>();
 	int Ncount = 0;
@@ -40,6 +40,10 @@ public class BC14LS {
 		this.vUrls = new VisitedUrl();
 		this.dn = dn;
 	}
+	/**
+	 * setURL config the basic things that we would need
+	 * @param url
+	 */
 	public void setURL(String url){
 		this.startUrl = url;
 		Pattern p = Pattern.compile("(?<=http://|\\.)[^.]*?\\.(com|cn|net|org|biz|info|cc|tv)",Pattern.CASE_INSENSITIVE);
@@ -55,6 +59,11 @@ public class BC14LS {
 		FunctionUtils.topDomain = topDomain;
 		DrawNetwork.hasDiff = true;
 	}
+	/**
+	 * get the key from a value in a hashmap
+	 * @param value
+	 * @return
+	 */
 	public String getKeyFrom(int value){
 		Iterator<String> it = mapNodes.keySet().iterator();
 		String key = "";

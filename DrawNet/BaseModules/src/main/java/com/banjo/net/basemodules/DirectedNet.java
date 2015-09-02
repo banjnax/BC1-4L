@@ -10,7 +10,9 @@ public class DirectedNet extends Net  implements Serializable{
 	public DirectedNet(String name,ArrayList<Node> nodes,ArrayList<Link> links,int type){
 		super(name,nodes,links,type);
 	}
-	
+	/**
+	 * print print some basic of the Net
+	 */
 	@Override
 	public String print(){
 		return "AdjacentMatrix:\n"+printMatrix(adjMatrix.useMatrix) + "\nReachableMatrix:\n"+printMatrix(reaMatrix.useMatrix);

@@ -2,7 +2,11 @@ package com.banjo.net.basemodules;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
+/**
+ * the adjacent matrix inherit base matrix
+ * @author banjnax
+ *
+ */
 public class AdjacentMatrix extends BaseMatrix{
 
 	private static final long serialVersionUID = 1L;

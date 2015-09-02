@@ -57,7 +57,11 @@ import org.jfree.ui.RefineryUtilities;
 import com.banjo.net.basemodules.Link;
 import com.banjo.net.basemodules.Net;
 import com.banjo.net.basemodules.Node;
-
+/**
+ * 
+ * @author banjnax
+ *@version null
+ */
 public class DrawNetwork extends JFrame{
 /**
  * @author banjo
@@ -102,9 +106,9 @@ public class DrawNetwork extends JFrame{
     int delay = 100;
     Timer timer = new Timer(delay, new TimerAction());//repaint the frame by a timer
     
-    DrawGraph drawGraph = new DrawGraph();//have the graph handle
-    DrawChart drawChart = new DrawChart(drawGraph);
-    ZD zd = new ZD();
+    DrawGraph drawGraph = new DrawGraph();//have the graph handler
+    DrawChart drawChart = new DrawChart(drawGraph);//have the chart handler
+    ZD zd = new ZD();//have the ZD handler
     
     static BC14LS bcls = null;
     int paintFlag = 0;//the selected tap
@@ -115,6 +119,9 @@ public class DrawNetwork extends JFrame{
 	public static void main(String[] args) {
 		new DrawNetwork().launch();
 	}
+	/**
+	 * start the program
+	 */
 	public void launch(){
 		//config log4j
 		PropertyConfigurator.configure ("bc14log.properties");
@@ -152,6 +159,9 @@ public class DrawNetwork extends JFrame{
 		bcls = new BC14LS(this);// "http://www.labcomplex.org/"
 		new Thread(new Crawl()).run();
 	}
+	/**
+	 * set all the components in this program
+	 */
 	public void setComponent(){
 		
 		//menu part
@@ -262,6 +272,11 @@ public class DrawNetwork extends JFrame{
 		this.setBackground(Color.white);
         g.drawImage(offScreenImage, 0, 0, null);     
 	}
+	/**
+	 * printInfo print the system info in the history palette --the bottom of this program
+	 * @param info
+	 * @param type
+	 */
 	public static void printInfo(String info,String type){
 		if(type=="red") logger.error(info);
 		else logger.info(info);
@@ -285,9 +300,17 @@ public class DrawNetwork extends JFrame{
 			logger.error(e);
 		}
 	}
+	/**
+	 * the spider actions in our configuration
+	 */
 	public static void doCrawling(){
 		bcls.getRelateUrls();
 	}
+	/**
+	 * to point out the node that we have
+	 * @param wi
+	 * @param he
+	 */
 	public  void changeCoor(double wi, double he){
 		int nLen = drawGraph.nodes.ags.size();
 		for(int i = 0;i<nLen;i++){
@@ -686,6 +709,11 @@ public class DrawNetwork extends JFrame{
 		}
 		
 	}
+	/**
+	 * servers for the  frame's size change to make sure all the components in their relative position
+	 * @author banjnax
+	 *
+	 */
 	private class ResizeListener implements ComponentListener{
 
 		@Override
@@ -720,6 +748,11 @@ public class DrawNetwork extends JFrame{
 		}
 		
 	}
+	/**
+	 * the thread that the spider use
+	 * @author banjnax
+	 *
+	 */
 	private class Crawl implements Runnable{
 
 		@Override

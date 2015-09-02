@@ -25,6 +25,10 @@ public class Node implements Serializable{
 			count++;
 		}
 	}
+	/**
+	 * paint paint the node itself
+	 * @param g, the graphical pen from the top
+	 */
 	public void paint(Graphics g){
 		Color c =g.getColor();
 		g.setColor(self_color);
@@ -33,6 +37,9 @@ public class Node implements Serializable{
 		g.drawString(label, self.x-3-count*2, self.y+4);
 		g.setColor(c);
 	}
+	/**
+	 * inDegreeAdd when a link is added, then this method will be executed;we make the inDgree attr of the node added one
+	 */
 	public void inDegreeAdd(){
 		inDgree++;
 		this.size+=(4*(inDgree/10));//the size increase 4 when the indgree increase 10
@@ -40,6 +47,9 @@ public class Node implements Serializable{
 	public void outDegreeAdd(){
 		outDgree++;
 	}
+	/**
+	 * inDegreeDec when a link is added, then this method will be executed;we make the inDgree attr of the node reduce one
+	 */
 	public void inDegreeDec(){
 		inDgree--;
 		this.size+=(2*(inDgree/10));//the size increase 4 when the indgree increase 10

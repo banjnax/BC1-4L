@@ -50,6 +50,9 @@ public class DrawChart {
         setComponent();
         addListerens();
 	}
+	/**
+	 * fix the components in this tap palette
+	 */
 	public void setComponent(){
 		GridBagConstraints cons = new GridBagConstraints();
 		cons.fill = GridBagConstraints.BOTH;

@@ -64,6 +64,9 @@ public class DrawGraph {
 		graph.setLayout(new GridBagLayout());
 		constructGraph();
 	}
+	/**
+	 * the baic configure and the componnets fixeds
+	 */
 	private void constructGraph(){
         //set background color of the palette
 		palette.setBackground(Color.white);
@@ -192,6 +195,11 @@ public class DrawGraph {
 		graph.add(blank,cons);
 		
 	}
+	/**
+	 * some actions listerens that we would need in this tap palette
+	 * @author banjnax
+	 *
+	 */
 	private class ButtonAction implements ActionListener {//the listeners for buttons
 
 		@Override
@@ -314,6 +322,11 @@ public class DrawGraph {
 		}
 		
 	}
+	/**
+	 * the mouse listener that servers the mouse motion,such click and drag
+	 * @author banjnax
+	 *
+	 */
 	private class MouseAction implements MouseListener,MouseMotionListener{
 		@Override
 		public void mouseClicked(MouseEvent e) {

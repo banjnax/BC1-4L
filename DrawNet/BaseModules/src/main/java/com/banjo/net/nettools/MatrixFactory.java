@@ -37,6 +37,11 @@ public class MatrixFactory {
 		Matrix t_m = net.reaMatrix.useMatrix.transpose();
 		return t_m.times(m);
 	}
+	/**
+	 * getLaplace get the laplace matrix of a net
+	 * @param net
+	 * @return
+	 */
 	public Matrix getLaplac(Net net){
 		Matrix m = net.reaMatrix.useMatrix;
 		Matrix t_m = net.reaMatrix.useMatrix.transpose();
